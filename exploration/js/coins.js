@@ -21,11 +21,9 @@ function RolesMultiples() {
     svgEnter = svg.enter().append("div");
 
     calculateDimensions();
-    //addLinksToCoins();
-    //drawCoins();
     drawLegend();
-    addLinksToActors();
-    drawActors();
+    addLinksToCoins();
+    drawCoins();
   }
 
   function calculateDimensions() {
@@ -179,18 +177,17 @@ function expandData(compressed) {
   return data;
 }
 
-
 // APP
 
 function app() {
   var _app = {},
       data = {},
       rolesMultiples = RolesMultiples()
-      files = ["links", "coins", "actors"];
+      files = ["links", "coins"];
 
   function loadData() {
     _.map(files, function(file) {
-      d3.json("data/json/"+ file +".json", function(err, response) {
+      d3.json("../data/json/"+ file +".json", function(err, response) {
         if(!err)
           data[file] = expandData(response);
           render();
@@ -199,7 +196,7 @@ function app() {
   }
 
   function render() {
-    if(data.links && data.coins && data.actors) {
+    if(data.links && data.coins) {
       rolesMultiples.data(data)
       d3.select("#root").call(rolesMultiples);
     }

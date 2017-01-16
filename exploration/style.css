@@ -1,0 +1,15 @@
+body {
+  font-family: "Helvetica", sans-serif;
+  font-size: 10px;
+}
+
+p {
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+.info {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
