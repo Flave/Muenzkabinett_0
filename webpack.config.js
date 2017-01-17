@@ -4,11 +4,11 @@ var webpack = require('webpack');
 module.exports = {
   context: __dirname + "/app",
   entry: {
-    app: "./main.jsx",
+    app: "./main.js",
   },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'js/[name].js'
+    filename: 'js/[name].js',
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -22,7 +22,7 @@ module.exports = {
         loader: "babel-loader",
         query: {
           cacheDirectory: true,
-          presets: ['es2015', 'stage-0', 'react']
+          presets: ['es2015', 'stage-0']
         }
       },
       {
