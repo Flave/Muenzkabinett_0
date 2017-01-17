@@ -20,7 +20,7 @@ sys.setdefaultencoding('utf-8')
 def fetch_image(actor):
   if actor[9]:
     wikipedia_id = urllib.quote(actor[9].encode('utf8'), ':/')
-    page_images_url = "https://en.wikipedia.org/w/api.php?action=query&titles=" + wikipedia_id + "&prop=pageimages&format=json&pithumbsize=600"
+    page_images_url = "https://de.wikipedia.org/w/api.php?action=query&titles=" + wikipedia_id + "&prop=pageimages&format=json&pithumbsize=600"
     response = urllib.urlopen(page_images_url)
     data = json.loads(response.read())
     for page_id in data["query"]["pages"]:

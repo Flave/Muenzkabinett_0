@@ -21,7 +21,7 @@ finding_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[conta
 provenance_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[contains(text(), "Provenienz")]]'
 coinsFile = open(os.path.dirname(__file__) + '../data/json/coins.json', 'w')
 coinsCSVFile = open(os.path.dirname(__file__) + '../data/csv/coins.csv', 'w')
-actorsFile = open(os.path.dirname(__file__) + '../data/json/actors_wikipedia_en.json', 'w')
+actorsFile = open(os.path.dirname(__file__) + '../data/json/actors.json', 'w')
 linksFile = open(os.path.dirname(__file__) + '../data/json/links.json', 'w')
 
 coins = []
@@ -219,7 +219,7 @@ def getWikipediaId(actor_uris):
 def parseViafLinks(links):
   if type(links) is dict and 'Wikipedia' in links:
     for link in links['Wikipedia']:
-      if 'de.wikipedia.org' in link:
+      if 'en.wikipedia.org' in link:
         path_segments = link.split('/') 
         wikipedia_id = path_segments[len(path_segments) - 1]
         return wikipedia_id
@@ -235,11 +235,11 @@ for fn in os.listdir(os.path.dirname(__file__)  + './../data/xml'):
   parseFile(fn)
 
 # Fetch wikipedia_id
-for actor in actors[1:len(actors)]:
-  print "Fetching wikipedia id of actor: " + actor[0]
-  wikipedia_id = getWikipediaId(actor[5:9])
-  actor.append(wikipedia_id)
-  sleep(0.5)
+# for i, actor in enumerate(actors[1:len(actors)]):
+#   print "Fetching wikipedia id of actor: " + str(i) + " " + actor[0]
+#   wikipedia_id = getWikipediaId(actor[5:9])
+#   actor.append(wikipedia_id)
+#   sleep(1)
 
 # ANALYSIS
 actors_with_both_dates = 0
