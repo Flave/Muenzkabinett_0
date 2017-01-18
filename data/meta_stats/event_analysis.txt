@@ -1,0 +1,106 @@
+Production events  29738 / 29738 -> 100.0%
+Finding events     3198 / 29738 -> 10.7539175466%
+Provenance events  17123 / 29738 -> 57.5795278768%
+-----------------
+Max production events per item   1
+Max finding events per item     1
+Max provenance events per item  4
+-----------------
+Production actors found in  23689 / 29738 -> 79.6590221266%
+Finding actors found in     0 / 29738 -> 0.0%
+Provenance actors found in  17123 / 29738 -> 57.5795278768%
+-----------------
+Max actors found in production  16
+Max actors found in finding     0
+Max actors found in provenance  4
+-----------------
+Roles found in production: 
+Dargestellte/r 15168
+Entwurf 788
+Münzherr 16860
+Münzmeister (MM Ant) 850
+Medailleur/in 2196
+Strategos 55
+Stempelschneider 693
+Magistrat (Ant) 1244
+Münzmeister (MM Nz) 979
+Quaestor 25
+Proconsul 58
+Legatus Augusti pro praetore 61
+Imperator (Röm. Republik) 214
+Praetor 9
+Praefectus classis et orae maritimae 16
+Triumvir RPC 310
+Quaestor pro praetore 11
+Legatus pro praetore 49
+Praefectus 32
+Grammateus 5
+Hauptgraveur 34
+Münzdirektor (MD) 46
+Proquaestor 21
+Münzwardein (MW) 45
+Münzpächter (MP) 29
+Kardinalkämmerer (Camerlengo) 4
+Bürgermeister (BM) 16
+Falschmünzer 22
+Aedil 6
+Kronschatzmeister 26
+Ephor 1
+Prytan 2
+Asiarch 4
+Archon 11
+Consul 53
+Propraetor 4
+Münzmeister (MM Ma) 252
+Patricius 37
+Archiereus 10
+Duumvir 284
+Hersteller 441
+Edelmetallprüfer 6
+Magistrat (Ma) 3
+Hegemon 59
+Geehrte/r (ohne Bildnis, Med./Gedenkmzn) 57
+Dictator (Röm. Republik) 41
+Rechenpfg.-macher 13
+Kammergraf 13
+Legatus 13
+Münzprüfer (MPr) 4
+Königlicher Kommissar 2
+Vollziehender 10
+Vorsitzender 2
+Druckerei 151
+Papierhersteller 6
+Proquaestor pro praetore 3
+Praefectus Classis 12
+Augur 7
+Direktor 6
+Hiereus 1
+Reichsbankdirektorium 101
+Graveur 15
+Praefectus Urbi 3
+Graphiker 19
+Bevollmächtigter 109
+Ausgabestelle 4
+Reg.-Kommissar 1
+Verwaltungsrat 15
+Vogt 2
+Kassierer 1
+Reichsschuldenverw. 20
+Gymnasiarch 1
+Eigentümer (Unterzeichner) 1
+Medaillenverlag 60
+Designbüro 1
+Eponym (posthum) 9
+Hieromnemon 1
+Basileus (Magistrat) 1
+Geront 1
+Presbeutes 5
+Quattuorvir 1
+Antistrategos 2
+Praefectus Palatii Apostolici 1
+Verwalter der Engelsburg 1
+Tamias 8
+Max occurence: 16860
+Roles found in finding: 
+Roles found in provenance: Vorbesitzer
+Vorbesitzer 17865

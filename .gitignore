@@ -1,4 +1,6 @@
 /.DS_Store
-/data
+/data/xml
+/data/images
+/data/csv
 /node_modules
 **/.DS_Store
