@@ -43,10 +43,10 @@ coin_specs = [
     'key': 'date_latest',
     'path': production_event_set + '//lido:latestDate/text()'
   },
-  {
-    'key': 'production_period_name',
-    'path': production_event_set + '//lido:periodName/lido:term/text()'
-  },
+  # {
+  #   'key': 'production_period_name',
+  #   'path': production_event_set + '//lido:periodName/lido:term/text()'
+  # },
   {
     'key': 'production_country',
     'path': production_event_set + '//lido:place[@lido:politicalEntity="country"]//lido:appellationValue/text()'
@@ -58,11 +58,11 @@ coin_specs = [
   {
     'key': 'production_minting_place',
     'path': production_event_set + '//lido:place[@lido:politicalEntity="minting_place"]//lido:appellationValue/text()'
-  },
-  {
-    'key': 'nominal',
-    'path': '//lido:classificationWrap//lido:term[@lido:label="nominal"]/text()'
   }
+  # {
+  #   'key': 'nominal',
+  #   'path': '//lido:classificationWrap//lido:term[@lido:label="nominal"]/text()'
+  # }
 ]
 
 actor_specs = [
@@ -135,10 +135,10 @@ def parseValue(tree, path, index=0):
 
 def parseFile(fileName):
   tree = etree.parse(os.path.dirname(__file__)  + '../data/xml/' + fileName)
-  coin_id = fileName[:8]
+  coin_id = fileName[3:8]
   print coin_id
-  #parseCoinData(tree, coin_id)
-  parseActorsData(tree, coin_id)
+  parseCoinData(tree, coin_id)
+  #parseActorsData(tree, coin_id)
 
 
 def parseCoinData(tree, coin_id):
@@ -184,7 +184,6 @@ def parseActor(actor, coin_id):
 
 
   if role != "Vorbesitzer":
-    # wikipedia_id = getWikipediaId([actor_uri, actor_uri_alt, actor_uri_alt_1, actor_uri_alt_2])
     actor_data.append(actor_id)
     actor_data.append(first_name)
     actor_data.append(last_name)
@@ -194,8 +193,7 @@ def parseActor(actor, coin_id):
     actor_data.append(actor_uri_alt)
     actor_data.append(actor_uri_alt_1)
     actor_data.append(actor_uri_alt_2)
-    #actor_data.append(wikipedia_id)
-    # links.append([coin_id, actor_data[0], role.replace("ü", "ue")])
+    links.append([coin_id, actor_data[0], role.replace("ü", "ue")])
     return actor_data
   else:
     return None
@@ -305,15 +303,15 @@ print "Actors with death dates", actors_with_death
 
 print "Writing files"
 
-# writer = csv.writer(coinsCSVFile)
-# writer.writerows(coins)
-# coinsCSVFile.close()
-  # with coinsFile as outfile:
-  #   json.dump(coins, outfile)
+writer = csv.writer(coinsCSVFile)
+writer.writerows(coins)
+coinsCSVFile.close()
+# with coinsFile as outfile:
+#   json.dump(coins, outfile)
 
 
-with actorsFile as outfile:
-  json.dump(actors, outfile)
+# with actorsFile as outfile:
+#   json.dump(actors, outfile)
 
 # with linksFile as outfile:
 #   json.dump(links, outfile)
