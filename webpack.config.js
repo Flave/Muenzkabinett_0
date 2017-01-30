@@ -37,6 +37,11 @@ module.exports = {
         loader: "file?emitFile=false&name=[name].[ext]"
       },
       {
+        test: /\.template$/,
+        // works fine if it is always like that
+        loader: "raw-loader"
+      },
+      {
         test: /\.html$/,
         loader: "file?name=[name].[ext]",
       },

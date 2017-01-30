@@ -1,0 +1,3 @@
+<div class="ui-section ui-tabs" id="tabs"></div>
+<div class="ui-section ui-taglist" id="attributes"></div>
+<div class="ui-section ui-selection" id="attribute-selection"></div>

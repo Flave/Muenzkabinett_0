@@ -1,6 +1,6 @@
 /.DS_Store
 /data/xml
-/data/images
-/data/csv
+/data/images/*
+!/data/images/sprites
 /node_modules
 **/.DS_Store

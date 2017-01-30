@@ -1,0 +1,5 @@
+{{#tabs}}
+<div class="ui-tabs__tab">
+  {{value}}
+</div>
+{{/tabs}}

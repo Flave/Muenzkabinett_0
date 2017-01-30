@@ -18,10 +18,24 @@ export default function Coin(texture, data) {
 
   function onDragStart(event) {
     // "this" is the coin object (a PIXI Sprite object)
-    this.event = event.data;
+/*    this.event = event.data;
     this.dragging = true;
     var offsetX = event.data.originalEvent.clientX - this.position.x,
         offsetY = event.data.originalEvent.clientY - this.position.y;
+    this.event.eventOffset = {x: offsetX, y: offsetY};
+    dispatch.call('dragstart');*/
+
+    // "this" is the coin object (a PIXI Sprite object)
+    this.event = event.data;
+    this.dragging = true;
+
+    var transform = this.parent.transform.localTransform;
+    var pos = new Point(this.position.x, this.position.y)
+    var posProjected = transform.apply(pos);
+
+    var offsetX = event.data.originalEvent.clientX - posProjected.x,
+        offsetY = event.data.originalEvent.clientY - posProjected.y;
+
     this.event.eventOffset = {x: offsetX, y: offsetY};
     dispatch.call('dragstart');
   }

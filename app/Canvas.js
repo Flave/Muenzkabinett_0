@@ -10,9 +10,9 @@ export default function Canvas() {
       zoomBehavior = d3.zoom().scaleExtent([0.3, 1.2]).on("zoom", zoom),
       pos2Tint = d3.scaleQuantize().domain([-2, 2]).range([0x999999, 0xaaaaaa, 0xbbbbbb, 0xffffff])
 
-  function canvas() {
+  function canvas(container) {
     renderer = autoDetectRenderer(size.width, size.height, {transparent: true});
-    document.body.appendChild(renderer.view);
+    container.appendChild(renderer.view);
     stage = new Container();
     zoomCanvas = d3.select(renderer.view)
       .call(zoomBehavior);
@@ -22,13 +22,9 @@ export default function Canvas() {
 
   canvas.render = function() {
     coinsStore.get().forEach(function(coin, i) {
-      //if(i > 1) return;
       coin.x = d3.randomNormal(size.width/2, 100)();
       coin.y = d3.randomNormal(size.height/2, 100)();
       coin.interactive = true;
-      //coin.tint = pos2Tint(coin.x/size.width + coin.y/size.height);
-      if(i < 100)
-        console.log();
 
       coin
       .on('dragstart', function() {
@@ -40,15 +36,12 @@ export default function Canvas() {
 
       stage.addChild(coin);
     })
-    renderer.render(stage);
+
+    requestAnimationFrame( animate );
   }
 
-  requestAnimationFrame( animate );
-
   function animate() {
-
       requestAnimationFrame(animate);
-
       // render the stage
       renderer.render(stage);
   }
