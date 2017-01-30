@@ -17,17 +17,11 @@ export default function Coin(texture, data) {
     .on('touchmove', onDragMove);
 
   function onDragStart(event) {
-    // store a reference to the data
-    // the reason for this is because of multitouch
-    // we want to track the movement of this particular touch
+    // "this" is the coin object (a PIXI Sprite object)
     this.event = event.data;
     this.dragging = true;
-    var scale = this.parent.transform.scale._x,
-        transform = this.parent.transform.localTransform,
-        offset = transform.apply(new Point(event.data.originalEvent.clientX - this.position.x, event.data.originalEvent.clientY - this.position.y));
-
-    var offsetX = offset.x;
-    var offsetY = offset.y;
+    var offsetX = event.data.originalEvent.clientX - this.position.x,
+        offsetY = event.data.originalEvent.clientY - this.position.y;
     this.event.eventOffset = {x: offsetX, y: offsetY};
     dispatch.call('dragstart');
   }
@@ -36,12 +30,14 @@ export default function Coin(texture, data) {
     if (this.dragging) {
       var mouseX = this.event.originalEvent.clientX,
           mouseY = this.event.originalEvent.clientY,
-          scale = this.parent.transform.scale._x,
-          position = this.parent.transform.position,
+          offsetX = this.event.eventOffset.x,
+          offsetY = this.event.eventOffset.y,
+          // parent is the PIXI container object the coin is contained in
           transform = this.parent.transform.localTransform,
-          projectedMouse = transform.applyInverse(new Point(mouseX, mouseY));
-      this.position.x = projectedMouse.x;// - this.event.eventOffset.x;
-      this.position.y = projectedMouse.y;// - this.event.eventOffset.y;
+          originalPoint = new Point(mouseX - offsetX, mouseY - offsetY),
+          projectedPoint = transform.applyInverse(originalPoint);
+      this.position.x = projectedPoint.x;
+      this.position.y = projectedPoint.y;
       dispatch.call('drag');
     }
   }
