@@ -10,6 +10,7 @@ import json
 import urllib
 import pprint
 from time import sleep
+import hashlib
 
 reload(sys)  
 sys.setdefaultencoding('utf-8')
@@ -22,15 +23,14 @@ provenance_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[co
 coinsFile = open(os.path.dirname(__file__) + '../data/json/coins.json', 'w')
 coinsCSVFile = open(os.path.dirname(__file__) + '../data/csv/coins.csv', 'w')
 actorsFile = open(os.path.dirname(__file__) + '../data/json/actors.json', 'w')
+actorsCSVFile = open(os.path.dirname(__file__) + '../data/csv/actors.csv', 'w')
 linksFile = open(os.path.dirname(__file__) + '../data/json/links.json', 'w')
+linksCSVFile = open(os.path.dirname(__file__) + '../data/csv/links.csv', 'w')
 
 coins = []
 actors = []
 links = []
 coin_specs = [
-  {
-    'key': 'id',
-  },
   {
     'key': 'title',
     'path': '//lido:objectIdentificationWrap/lido:titleWrap//lido:appellationValue/text()'
@@ -80,22 +80,22 @@ actor_specs = [
   },
   {
     'key': 'date_latest'
-  },
-  {
-    'key': 'uri_1'
-  },
-  {
-    'key': 'uri_2'
-  },
-  {
-    'key': 'uri_3'
-  },
-  {
-    'key': 'uri_4'
-  },
-  {
-    'key': 'wikipedia_id'
   }
+  # {
+  #   'key': 'uri_1'
+  # },
+  # {
+  #   'key': 'uri_2'
+  # },
+  # {
+  #   'key': 'uri_3'
+  # },
+  # {
+  #   'key': 'uri_4'
+  # },
+  # {
+  #   'key': 'wikipedia_id'
+  # }
 ]
 
 link_specs = [
@@ -138,12 +138,19 @@ def parseFile(fileName):
   coin_id = fileName[3:8]
   print coin_id
   parseCoinData(tree, coin_id)
-  #parseActorsData(tree, coin_id)
 
 
 def parseCoinData(tree, coin_id):
   data = []
-  
+
+  thumb_url = parseValue(tree, '//lido:resourceSet/lido:resourceRepresentation[@lido:type="image_thumb"]/lido:linkResource/text()')
+  object_type = parseValue(tree, '//lido:objectWorkType/lido:term/text()')
+
+  if thumb_url == "http://ww2.smb.museum/mk_edit/images/sperre300.jpg" or object_type != "Coin":
+    return None
+
+  data.append(coin_id)
+
   for spec in coin_specs:
     if(spec['key'] == 'id'):
       data.append(coin_id)
@@ -151,6 +158,8 @@ def parseCoinData(tree, coin_id):
       value = parseValue(tree, spec['path'])
       data.append(value)
   coins.append(data)
+
+  parseActorsData(tree, coin_id)
 
 
 def parseActorsData(tree, coin_id):
@@ -180,7 +189,7 @@ def parseActor(actor, coin_id):
   actor_uri_alt_1 = parseValue(actor, './/lido:actorID[@lido:type="URI"]/text()', 2) or ""
   actor_uri_alt_2 = parseValue(actor, './/lido:actorID[@lido:type="URI"]/text()', 3) or ""
   name = first_name + " " +  last_name
-  actor_id = re.sub(r'\W', "", name)
+  actor_id = hashlib.md5(name).hexdigest()[:10] #re.sub(r'\W', "", name)
 
 
   if role != "Vorbesitzer":
@@ -189,10 +198,10 @@ def parseActor(actor, coin_id):
     actor_data.append(last_name)
     actor_data.append(date_eatliest)
     actor_data.append(date_latest)
-    actor_data.append(actor_uri)
-    actor_data.append(actor_uri_alt)
-    actor_data.append(actor_uri_alt_1)
-    actor_data.append(actor_uri_alt_2)
+    #actor_data.append(actor_uri)
+    #actor_data.append(actor_uri_alt)
+    #actor_data.append(actor_uri_alt_1)
+    #actor_data.append(actor_uri_alt_2)
     links.append([coin_id, actor_data[0], role.replace("ü", "ue")])
     return actor_data
   else:
@@ -224,7 +233,9 @@ def parseViafLinks(links):
   return None
 
 
-coins.append(getKeys(coin_specs))
+coin_keys = getKeys(coin_specs)
+coin_keys.insert(0, 'id')
+coins.append(coin_keys)
 actors.append(getKeys(actor_specs))
 links.append(getKeys(link_specs))
 
@@ -310,8 +321,14 @@ coinsCSVFile.close()
 #   json.dump(coins, outfile)
 
 
+writer = csv.writer(actorsCSVFile)
+writer.writerows(actors)
+actorsCSVFile.close()
 # with actorsFile as outfile:
 #   json.dump(actors, outfile)
 
+writer = csv.writer(linksCSVFile)
+writer.writerows(links)
+linksCSVFile.close()
 # with linksFile as outfile:
 #   json.dump(links, outfile)

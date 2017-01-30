@@ -5,4 +5,4 @@ import * as d3 from 'd3';
 require("./index.html");
 require("./sass/main.scss");
 
-app.init();
+window.onload = app.init;
