@@ -1,11 +1,11 @@
 import {Sprite, Point} from 'pixi.js';
 import * as d3 from 'd3';
-import TweenLite from 'gsap';
 
 export default function Coin(texture, data) {
   var coin = new PIXI.Sprite(texture),
       dispatch = d3.dispatch('dragstart', 'drag', 'dragend');
   coin.data = data;
+  //coin.visible = false;
 
   coin
     .on('mousedown', onDragStart)
@@ -18,15 +18,6 @@ export default function Coin(texture, data) {
     .on('touchmove', onDragMove);
 
   function onDragStart(event) {
-    // "this" is the coin object (a PIXI Sprite object)
-/*    this.event = event.data;
-    this.dragging = true;
-    var offsetX = event.data.originalEvent.clientX - this.position.x,
-        offsetY = event.data.originalEvent.clientY - this.position.y;
-    this.event.eventOffset = {x: offsetX, y: offsetY};
-    dispatch.call('dragstart');*/
-
-    // "this" is the coin object (a PIXI Sprite object)
     this.event = event.data;
     this.dragging = true;
 
@@ -64,8 +55,21 @@ export default function Coin(texture, data) {
     dispatch.call('dragend');
   }
 
-  coin.move = function(x, y, delay) {
-    TweenLite.to(coin, 1, {x: x, y: y, delay: delay/2});
+  coin.move = function(x, y, duration, delay, cb) {
+    var dx = x - coin.position.x,
+        dy = y - coin.position.y,
+        ox = coin.position.x,
+        oy = coin.position.y;
+
+    var timer = d3.timer(function(elapsed) {
+      var t = elapsed / duration;
+      coin.position.x =  ox + (dx * d3.easePolyInOut(t, 3));
+      coin.position.y =  oy + (dy * d3.easePolyInOut(t, 3));
+      if(elapsed > duration) {
+        timer.stop();
+        cb !== undefined && cb(coin);
+      }
+    }, delay);
   }
 
   return d3.rebind(coin, dispatch, 'on');

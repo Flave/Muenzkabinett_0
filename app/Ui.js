@@ -16,7 +16,7 @@ export default function Ui() {
       uiTaglist = UiTaglist(),
       dispatch = d3.dispatch('click');
 
-  stateStore.on('change', render);
+  stateStore.on('change.ui', render);
 
   function ui(_container) {
     container = _container;

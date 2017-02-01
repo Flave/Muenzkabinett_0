@@ -1,7 +1,8 @@
 import * as d3 from 'd3';
 
 var _state = {
-  selectedProperties: []
+  selectedProperties: [],
+  applicableLayouts: []
 };
 
 var dispatch = d3.dispatch('change');
@@ -13,7 +14,6 @@ var setters = {
       newProp.shift();
 
     _state[key] = newProp;
-    console.log(_state[key]);
   }
 }
 
