@@ -1,8 +1,9 @@
 import * as d3 from 'd3';
+import layouter from 'app/layouter';
 
 var _state = {
   selectedProperties: [],
-  applicableLayouts: []
+  selectedLayout: 'pile'
 };
 
 var dispatch = d3.dispatch('change');
@@ -14,6 +15,9 @@ var setters = {
       newProp.shift();
 
     _state[key] = newProp;
+    var applicableLayouts = layouter.getApplicableLayouts(_state);
+    console.log(applicableLayouts);
+    _state.selectedLayout = applicableLayouts[0].key;
   }
 }
 

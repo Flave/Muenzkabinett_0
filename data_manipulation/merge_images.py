@@ -5,7 +5,7 @@ from random import randint
 import csv
 import tinify
 
-coin_ids = csv.reader(open(os.path.dirname(__file__) + '../data/csv/coins_raw.csv'), delimiter=",")
+coin_ids = csv.reader(open(os.path.dirname(__file__) + '../data/csv/coins_extended.csv'), delimiter=",")
 keys = coin_ids.next()
 tinify.key = "LtNfjPbJz6Cxj_kN8EdQT4SjHN1wCRBj"
 
@@ -18,7 +18,7 @@ sheet_index = 0
 threshold = 240
 blur = 1.7
 shadow_size = 3
-thumb_height = 31
+thumb_height = 40
 coin_height = thumb_height - shadow_size * 2
 coin_ids = list(coin_ids)
 
@@ -63,12 +63,15 @@ def create_shadow(img):
 
 for i, coin_data in enumerate(coin_ids):
   coin_id = coin_data[0]
-  img = Image.open('../data/images/thumbs_front/thumb_front_182' + str(coin_id) + ".jpg")
+  img = Image.open('../data/images/thumbs_front_m/' + str(coin_id) + ".jpg")
   img = img.convert("RGBA")
-  img = img.resize((calculate_image_width(img, coin_height), coin_height))
-  new_thumb = make_white_transparent(img)
-  shadow_thumb = create_shadow(new_thumb)
-  shadow_thumb.paste(new_thumb, (3, 3), new_thumb)
+
+  # make sure the new thumb is bigger than the old one
+
+  #new_thumb = make_white_transparent(img)
+  shadow_thumb = create_shadow(img)
+  shadow_thumb.paste(img, (3, 3), img)
+  shadow_thumb = img.resize((calculate_image_width(img, coin_height), coin_height))
 
   # create new image and paste current coin into it
   if i % 50 == 0:
@@ -103,21 +106,21 @@ for i, coin_data in enumerate(coin_ids):
 
   # if coins_per_sheet or end of coins is reached save image and compress
   if (i + 1) % coins_per_sheet == 0 or (i == (len(coin_ids) - 1)):
-    # end_index = i if i == (len(coin_ids) - 1) else (sheet_index + 1) * coins_per_sheet
-    # image_file_name = 'coins_sprites_' + str(thumb_height) + '_' + str(sheet_index * coins_per_sheet) + '_' + str(end_index) + '_unoptimised'
-    # image_file_path = '../data/images/sprites/' + image_file_name + '.png'
-    # merged_image.save(image_file_path, "PNG")
-    # # compress the image just created and save it again
-    # print "Optimising image " + str(sheet_index)
-    # source = tinify.from_file(image_file_path)
-    # source.to_file(image_file_path[:-16] + ".png")
+    end_index = i if i == (len(coin_ids) - 1) else (sheet_index + 1) * coins_per_sheet
+    image_file_name = 'coins_sprites_' + str(thumb_height) + '_' + str(sheet_index * coins_per_sheet) + '_' + str(end_index) + '_unoptimised'
+    image_file_path = '../data/images/sprites/' + image_file_name + '__.png'
+    merged_image.save(image_file_path, "PNG")
+    # compress the image just created and save it again
+    print "Optimising image " + str(sheet_index)
+    source = tinify.from_file(image_file_path)
+    source.to_file(image_file_path[:-16] + ".png")
     # reset all the variables
     merged_image = Image.new('RGBA', (1, 1))
     sheet_index += 1
     num_rows = 0
     x_pos = 0
 
-coins_file = open(os.path.dirname(__file__) + '../data/csv/coins.csv', 'w')
+coins_file = open(os.path.dirname(__file__) + '../data/csv/coins_40.csv', 'w')
 
 # re-insert keys
 coin_ids.insert(0, keys)

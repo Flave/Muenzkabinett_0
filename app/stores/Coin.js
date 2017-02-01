@@ -1,9 +1,11 @@
 import {Sprite, Point} from 'pixi.js';
 import * as d3 from 'd3';
+import Tooltip from 'app/components/Tooltip';
 
 export default function Coin(texture, data) {
   var coin = new PIXI.Sprite(texture),
-      dispatch = d3.dispatch('dragstart', 'drag', 'dragend');
+      dispatch = d3.dispatch('dragstart', 'drag', 'dragend'),
+      tooltip = Tooltip();
   coin.data = data;
   //coin.visible = false;
 
@@ -15,7 +17,24 @@ export default function Coin(texture, data) {
     .on('touchend', onDragEnd)
     .on('touchendoutside', onDragEnd)
     .on('mousemove', onDragMove)
-    .on('touchmove', onDragMove);
+    .on('touchmove', onDragMove)
+    .on('mouseover', onMouseOver)
+    .on('mouseout', onMouseOut);
+
+  function onMouseOver(event) {
+    var coinCenter = new Point(coin.position.x + coin.width/2, coin.position.y),
+        projectedPoint = this.parent.transform.localTransform.apply(coinCenter);
+
+    window.setTimeout(function() {
+      tooltip
+        .visibility(true)
+        .position(projectedPoint)(coin.data);
+    });
+  }
+
+  function onMouseOut(event) {
+    tooltip.visibility(false)();
+  }
 
   function onDragStart(event) {
     this.event = event.data;
@@ -60,6 +79,9 @@ export default function Coin(texture, data) {
         dy = y - coin.position.y,
         ox = coin.position.x,
         oy = coin.position.y;
+
+    delay = delay || 0;
+    duration = duration || 1000;
 
     var timer = d3.timer(function(elapsed) {
       var t = elapsed / duration;

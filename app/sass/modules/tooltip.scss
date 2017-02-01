@@ -1,0 +1,24 @@
+.tooltip {
+  position: fixed;
+  z-index: 999;
+  background-color: $c-dark-1;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  padding: 20px;
+  transition: top left 1s;
+}
+
+.tooltip__title {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  line-height: 1.2em;
+  margin-bottom: 5px;
+}
+
+.tooltip__subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.2em;
+}

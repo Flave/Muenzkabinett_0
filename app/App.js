@@ -4,7 +4,6 @@ import * as d3 from 'd3';
 import stateStore from 'app/stores/state';
 import coins from 'app/stores/coins';
 import Canvas from 'app/Canvas';
-import layouter from 'app/layouter';
 import Ui from 'app/Ui';
 
 var app = {},
@@ -26,10 +25,6 @@ app.init = function() {
     .on('coinsLoaded', function() {
       canvas.init();
     });
-
-  stateStore.on('change.app', function() {
-    console.log(layouter.getApplicableLayouts());
-  })
 }
 
 export default app;
