@@ -22,6 +22,8 @@ export default function Canvas() {
 
   canvas.render = function() {
     coinsStore.get().forEach(function(coin, i) {
+      if(i > 10000)
+        return
       coin.x = d3.randomNormal(size.width/2, 100)();
       coin.y = d3.randomNormal(size.height/2, 100)();
       coin.interactive = true;
@@ -37,7 +39,17 @@ export default function Canvas() {
       stage.addChild(coin);
     })
 
-    requestAnimationFrame( animate );
+/*    window.setInterval(function() {
+
+      coinsStore.get().forEach(function(coin, i) {
+        if(i > 10000)
+          return
+        coin.move(d3.randomNormal(size.width/2, 100)(), d3.randomNormal(size.height/2, 100)(), Math.random());
+      })
+
+    }, 2000)*/
+
+    //requestAnimationFrame( animate );
   }
 
   function animate() {

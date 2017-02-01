@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import hogan from 'hogan.js';
+import templater from 'app/templater';
 import Template from 'app/templates/uiTabs.template';
 
 var tabs = [
@@ -14,11 +14,11 @@ var tabs = [
 ]
 
 export default function UiTabs() {
-  var template = hogan.compile(Template),
+  var template = templater(Template),
       dispatch = d3.dispatch('click');
 
   function uiTabs(container) {
-    container.html(template.render({tabs: tabs}));
+    container.html(template({tabs: tabs}));
     container
       .selectAll('.ui-tabs__tab')
       .on('click', onTabClick);

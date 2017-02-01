@@ -1,4 +1,2 @@
-<h3>Coin Properties</h3>
-{{#tags}}
-  <span class="ui-taglist__tag">{{value}}</span>
-{{/tags}}
+<h3 class="ui__section-title">Coin Properties</h3>
+<div class="ui-taglist" id="taglist"></div>

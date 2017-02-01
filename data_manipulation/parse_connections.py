@@ -20,11 +20,9 @@ ns = {'lido': 'http://www.lido-schema.org', 'xml': 'someuri'}
 production_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[contains(text(), "Herstellung")]]'
 finding_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[contains(text(), "Fund")]]'
 provenance_event_set = '//lido:eventSet[./lido:event/lido:eventType/lido:term[contains(text(), "Provenienz")]]'
-coinsFile = open(os.path.dirname(__file__) + '../data/json/coins.json', 'w')
-coinsCSVFile = open(os.path.dirname(__file__) + '../data/csv/coins.csv', 'w')
-actorsFile = open(os.path.dirname(__file__) + '../data/json/actors.json', 'w')
+
+coinsCSVFile = open(os.path.dirname(__file__) + '../data/csv/coins_extended.csv', 'w')
 actorsCSVFile = open(os.path.dirname(__file__) + '../data/csv/actors.csv', 'w')
-linksFile = open(os.path.dirname(__file__) + '../data/json/links.json', 'w')
 linksCSVFile = open(os.path.dirname(__file__) + '../data/csv/links.csv', 'w')
 
 coins = []
@@ -42,6 +40,10 @@ coin_specs = [
   {
     'key': 'date_latest',
     'path': production_event_set + '//lido:latestDate/text()'
+  },
+  {
+    'key': 'thumb_vs',
+    'path': '//lido:resourceSet/lido:resourceRepresentation[@lido:type="image_thumb"]/lido:linkResource/text()'
   },
   # {
   #   'key': 'production_period_name',
@@ -278,31 +280,8 @@ print "Removing tail"
 print len(coins)
 print len(actors)
 print len(links)
+
 print "==="
-
-# Remove actors with very few coins
-# for i, actor in enumerate(actors):
-#   threshold = 2
-#   num_connections = 0
-#   if i==0:
-#     continue
-#   for j, link in enumerate(links):
-#     if actor[0] == link[1]:
-#       num_connections += 1
-#     if num_connections > threshold:
-#       break
-#   if num_connections <= threshold:
-#     actors.remove(actor)
-#   for j, link in enumerate(links):
-#     if (actor[0] == link[1]) and num_connections <= threshold:
-#       links.remove(link)
-#       for coin in coins:
-#         if coin[0] == link[0]:
-#           coins.remove(coin)
-
-print len(coins)
-print len(actors)
-print len(links)    
 
 
 print "Number of coins", len(coins)
@@ -317,18 +296,11 @@ print "Writing files"
 writer = csv.writer(coinsCSVFile)
 writer.writerows(coins)
 coinsCSVFile.close()
-# with coinsFile as outfile:
-#   json.dump(coins, outfile)
-
 
 writer = csv.writer(actorsCSVFile)
 writer.writerows(actors)
 actorsCSVFile.close()
-# with actorsFile as outfile:
-#   json.dump(actors, outfile)
 
 writer = csv.writer(linksCSVFile)
 writer.writerows(links)
 linksCSVFile.close()
-# with linksFile as outfile:
-#   json.dump(links, outfile)

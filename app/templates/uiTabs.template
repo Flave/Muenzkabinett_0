@@ -1,5 +1,5 @@
-{{#tabs}}
+<% forEach(tabs, function(tab, i) { %>
 <div class="ui-tabs__tab">
-  {{value}}
+  <%= tab.value %>
 </div>
-{{/tabs}}
+<% }) %>

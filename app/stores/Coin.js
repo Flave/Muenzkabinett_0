@@ -1,5 +1,6 @@
 import {Sprite, Point} from 'pixi.js';
 import * as d3 from 'd3';
+import TweenLite from 'gsap';
 
 export default function Coin(texture, data) {
   var coin = new PIXI.Sprite(texture),
@@ -62,5 +63,10 @@ export default function Coin(texture, data) {
     this.event = null;
     dispatch.call('dragend');
   }
+
+  coin.move = function(x, y, delay) {
+    TweenLite.to(coin, 1, {x: x, y: y, delay: delay/2});
+  }
+
   return d3.rebind(coin, dispatch, 'on');
 }

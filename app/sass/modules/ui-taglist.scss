@@ -1,0 +1,18 @@
+.ui-taglist__tag {
+  display: inline-block;
+  background-color: #fff;
+  padding: 8px 17px;
+  border-radius: 32px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  color: $c-dark-1;
+  cursor: pointer;
+
+  &.is-selected {
+    background-color: red;
+  }
+
+  &:hover {
+    background-color: rgba(#fff, .8);
+  }
+}

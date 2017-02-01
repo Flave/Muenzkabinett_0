@@ -1,0 +1,16 @@
+#ui-container {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background-color: $c-dark-1;
+}
+
+.ui__section-title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #FFDE3A;
+  font-size: 18px;
+}
