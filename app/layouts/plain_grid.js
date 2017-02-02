@@ -11,8 +11,9 @@ export default {
         paddedBounds = {left: bounds.left + padding, right: bounds.right - padding*2, top: bounds.top + padding};
 
     coins.sort(function(a, b) {
-      return a.data.date_earliest - b.data.date_earliest;
+      return a.data[state.selectedProperties[0].key] - b.data[state.selectedProperties[0].key];
     });
+
     var x = paddedBounds.left,
         yIndex = 0,
         y = 0;
@@ -21,7 +22,7 @@ export default {
         x = paddedBounds.left;
         yIndex++;
       }
-      y = yIndex * 31 + paddedBounds.top;
+      y = yIndex * 40 + paddedBounds.top;
 
       coin.move(x, y, 1000, Math.random() * 500);
 

@@ -25,16 +25,30 @@ export default {
       type: 'discrete',
       similarityWeight: 0.8
     },
-/*    {
+    {
       key: 'weight',
       value: 'Weight',
-      type: 'continuous'
+      type: 'continuous',
+      similarityWeight: 0.1
     },
     {
-      key: 'size',
-      value: 'Size',
-      type: 'continuous'
-    },*/
+      key: 'diameter',
+      value: 'Diameter',
+      type: 'continuous',
+      similarityWeight: 0.1
+    },
+    {
+      key: 'production_material',
+      value: 'Material',
+      type: 'discrete',
+      similarityWeight: 0.3
+    },
+    {
+      key: 'nominal',
+      value: 'Nominal',
+      type: 'discrete',
+      similarityWeight: 0.6
+    },
     {
       key: 'date_earliest',
       value: 'Earliest Date',

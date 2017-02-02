@@ -6,8 +6,8 @@ import clusters from './clusters';
 
 export default [
   pile,
+  plain_grid,
   scatter_line,
-  plain_grid, 
   scatter_plot, 
   clusters,
   {

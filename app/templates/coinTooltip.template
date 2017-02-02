@@ -1,2 +1,3 @@
 <div class="tooltip__title"><%= title %></div>
 <div class="tooltip__subtitle"><%= date_earliest %> until <%= date_latest %></div>
+<div class="tooltip__data"><%= selectedProperty %></div>

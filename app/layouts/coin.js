@@ -24,7 +24,7 @@ export default {
         centerX = bounds.left + width/2,
         centerY = bounds.top + height/2,
         selectedCoin = _find(coins, function(coin) {return coin.data.id === state.selectedCoin; }),
-        baseRadius = 800,
+        baseRadius = 1000,
         outerBelt = 0,
         innerBelt = 300,
         duration = 1000,

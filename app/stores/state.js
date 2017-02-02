@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 import layouter from 'app/layouter';
 
-var _prevState = {};
-
 var _state = {
   selectedProperties: [],
   selectedLayout: 'pile',
   selectedCoin: undefined
 };
+
+var _prevState = {};
 
 var dispatch = d3.dispatch('change');
 var stateStore = {};
@@ -27,13 +27,18 @@ stateStore.get = function() {
   return _state;
 }
 
+stateStore.getPrevious = function() {
+  return _prevState;
+}
+
 stateStore.set = function(key, value, update) {
+  _prevState = _state;
   if(setters[key] !== undefined)
     setters[key](_state[key], value, key);
   else
     _state[key] = value;
   if(update !== false)
-    dispatch.call('change');
+    dispatch.call('change', _state, key);
 }
 
 export default d3.rebind(stateStore, dispatch, 'on');

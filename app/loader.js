@@ -14,9 +14,7 @@ loader.load = function() {
       actorsQ = d3.queue(),
       linksQ = d3.queue();
 
-
   loadCoins();
-
   return loader;
 }
 

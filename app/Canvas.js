@@ -83,6 +83,7 @@ export default function Canvas() {
 
   function update() {
     var state = stateStore.get(),
+        prevState = stateStore.getPrevious(),
         bounds = getCanvasBounds();
     layouter.update(coinsStore.get(), state, bounds);    
   }

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import templater from 'app/templater';
 import Template from 'app/templates/uiTabs.template';
+import stateStore from 'app/stores/state';
 
 var tabs = [
   {
@@ -21,15 +22,17 @@ export default function UiTabs() {
     container.html(template({tabs: tabs}));
     container
       .selectAll('.ui-tabs__tab')
+      .classed('is-selected', function(d, i) {
+        if(i===0) return true;
+      })
       .on('click', onTabClick);
 
     return uiTabs;
   }
 
   function onTabClick(d, i) {
-    console.log(tabs[i]);
+    //stateStore.set('selectedTab', tabs[i].key);
   }
-
 
 
   uiTabs.state = function(_) {

@@ -7,6 +7,7 @@ import _template from 'app/templater';
 
 import UiTabs from 'app/components/UiTabs';
 import UiTaglist from 'app/components/UiTaglist';
+import UiLayoutSelection from 'app/components/UiLayoutSelection';
 
 export default function Ui() {
   var root, rootEnter, rootUpdate,
@@ -14,8 +15,9 @@ export default function Ui() {
       template = _template(Template),
       uiTabs = UiTabs(),
       uiTaglist = UiTaglist(),
+      uiLayoutSelection = UiLayoutSelection(),
       dispatch = d3.dispatch('click'),
-      visible = false;
+      visible = true;
 
   stateStore.on('change.ui', render);
 
@@ -32,6 +34,7 @@ export default function Ui() {
     container.html(template({toggle: toggleText}))
     uiTabs(container.select('#tabs'));
     uiTaglist(container.select('#attributes'));
+    uiLayoutSelection(container.select('#layouts'));
 
     container
       .classed('is-visible', visible)

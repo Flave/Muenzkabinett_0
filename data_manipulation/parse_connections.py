@@ -41,13 +41,9 @@ coin_specs = [
     'key': 'date_latest',
     'path': production_event_set + '//lido:latestDate/text()'
   },
-  {
-    'key': 'thumb_vs',
-    'path': '//lido:resourceSet/lido:resourceRepresentation[@lido:type="image_thumb"]/lido:linkResource/text()'
-  },
   # {
-  #   'key': 'production_period_name',
-  #   'path': production_event_set + '//lido:periodName/lido:term/text()'
+  #   'key': 'thumb_vs',
+  #   'path': '//lido:resourceSet/lido:resourceRepresentation[@lido:type="image_thumb"]/lido:linkResource/text()'
   # },
   {
     'key': 'production_country',
@@ -60,11 +56,27 @@ coin_specs = [
   {
     'key': 'production_minting_place',
     'path': production_event_set + '//lido:place[@lido:politicalEntity="minting_place"]//lido:appellationValue/text()'
+  },
+  {
+    'key': 'diameter',
+    'path': '//lido:measurementType[contains(text(), "diameter")]/following-sibling::lido:measurementValue/text()'
+  },
+  {
+    'key': 'weight',
+    'path': '//lido:measurementType[contains(text(), "weight")]/following-sibling::lido:measurementValue/text()'
+  },
+  {
+    'key': 'production_material',
+    'path': production_event_set + '//lido:termMaterialsTech[@lido:type="material"]//lido:term/text()'
+  },
+  {
+    'key': 'production_technique',
+    'path': production_event_set + '//lido:termMaterialsTech[@lido:type="technique"]//lido:term/text()'
+  },
+  {
+    'key': 'nominal',
+    'path': '//lido:classificationWrap//lido:term[@lido:label="nominal"]/text()'
   }
-  # {
-  #   'key': 'nominal',
-  #   'path': '//lido:classificationWrap//lido:term[@lido:label="nominal"]/text()'
-  # }
 ]
 
 actor_specs = [

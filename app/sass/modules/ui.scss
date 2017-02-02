@@ -20,10 +20,14 @@
   }
 }
 
+.ui__section {
+  margin-bottom: 40px;
+}
+
 .ui__section-title {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #FFDE3A;
+  color: $c-accent-1;
   font-size: 18px;
 }
 
@@ -42,4 +46,26 @@
   letter-spacing: 0.1em;
   color: #fff;
   line-height: 50px;
+}
+
+.ui__section {
+  padding: 0 20px;
+}
+
+.ui-layouts-list__layout {
+  display: inline-block;
+  color: #fff;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  font-size: 44px;
+  cursor: pointer;
+
+  &.is-selected {
+    color: $c-accent-1;
+  }
+
+  &.is-disabled {
+    cursor: auto;
+    color: rgba(#fff, 0.2);
+  }
 }

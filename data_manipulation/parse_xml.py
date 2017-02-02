@@ -73,17 +73,17 @@ specs = [
     'path': '//lido:measurementType[contains(text(), "width")]/following-sibling::lido:measurementValue/text()'
   },
   {
+    'key': 'orientation',
+    'path': '//lido:measurementType[contains(text(), "orientation")]/following-sibling::lido:measurementValue/text()'
+  },
+  {
     'key': 'diameter',
     'path': '//lido:measurementType[contains(text(), "diameter")]/following-sibling::lido:measurementValue/text()'
   },
   {
     'key': 'weight',
     'path': '//lido:measurementType[contains(text(), "weight")]/following-sibling::lido:measurementValue/text()'
-  },
-  {
-    'key': 'orientation',
-    'path': '//lido:measurementType[contains(text(), "orientation")]/following-sibling::lido:measurementValue/text()'
-  },
+  },  
 
   # EVENTS
   {

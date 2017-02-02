@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import hogan from 'hogan.js';
 import Template from 'app/templates/uiTaglist.template';
 import stateStore from 'app/stores/state';
 import _cloneDeep from 'lodash.clonedeep';
@@ -13,7 +12,7 @@ import constants from 'app/constants';
 var tags = constants.coinProperties.filter(function(property) {return property.type !== 'individual'});
 
 export default function UiTaglist() {
-  var template = hogan.compile(Template),
+  var template = templater(Template),
       dispatch = d3.dispatch('click'),
       taglist,
       state,
@@ -21,7 +20,7 @@ export default function UiTaglist() {
 
   function uiTaglist(container) {
     state = stateStore.get();
-    container.html(template.render({tags: stateStore.get().coinProperties}));
+    container.html(template());
     taglist = container.select('#taglist');
 
     tagUpdate = taglist.selectAll('span.ui-taglist__tag').data(tags);

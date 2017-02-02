@@ -1,0 +1,23 @@
+.ui-tabs {
+  padding: 10px;
+  margin-bottom: 40px;
+}
+
+.ui-tabs__tab {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 70px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-left: -2px;
+  cursor: pointer;
+  background-color: $c-dark-1;
+
+  &.is-selected {
+    background-color: rgba(#000, 0.3);
+  }
+}
