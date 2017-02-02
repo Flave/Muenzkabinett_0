@@ -4,12 +4,13 @@ import tooltip from 'app/components/Tooltip';
 
 export default function Coin(texture, data) {
   var coin = new PIXI.Sprite(texture),
-      dispatch = d3.dispatch('dragstart', 'drag', 'dragend');
+      dispatch = d3.dispatch('dragstart', 'drag', 'dragend', 'click');
   coin.data = data;
   coin.interactive = true;
   //coin.visible = false;
 
   coin
+    .on('click', onClick)
     .on('mousedown', onDragStart)
     .on('touchstart', onDragStart)
     .on('mouseup', onDragEnd)
@@ -20,6 +21,13 @@ export default function Coin(texture, data) {
     .on('touchmove', onDragMove)
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
+
+
+  function onClick(event) {
+    if(this.moved)
+      return;
+    dispatch.call('click', coin);
+  }
 
   function onMouseOver(event) {
     var coinCenter = new Point(coin.position.x + coin.width/2, coin.position.y),
@@ -39,6 +47,7 @@ export default function Coin(texture, data) {
   function onDragStart(event) {
     this.event = event.data;
     this.dragging = true;
+    this.moved = null;
 
     var transform = this.parent.transform.localTransform;
     var pos = new Point(this.position.x, this.position.y)
@@ -61,6 +70,8 @@ export default function Coin(texture, data) {
           transform = this.parent.transform.localTransform,
           originalPoint = new Point(mouseX - offsetX, mouseY - offsetY),
           projectedPoint = transform.applyInverse(originalPoint);
+      // to check insie clickhandler whether coin has been moved
+      this.moved = true;
       this.position.x = projectedPoint.x;
       this.position.y = projectedPoint.y;
       dispatch.call('drag');
@@ -71,8 +82,8 @@ export default function Coin(texture, data) {
   }
 
   function onDragEnd() {
-    this.dragging = false;
     // set the interaction data to null
+    this.dragging = false;
     this.event = null;
     dispatch.call('dragend');
   }

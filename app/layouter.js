@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import _findIndex from 'lodash.findindex';
 import _find from 'lodash.find';
 import layouts from 'app/layouts';
+import coinLayout from 'app/layouts/coin';
 
 var layouter = {}
 
@@ -46,8 +47,10 @@ function getCoinsBounds(coins) {
 layouter.update = function(coins, state, bounds) {
   var layout = _find(layouter.layouts, {key: state.selectedLayout}),
       coinsBounds = getCoinsBounds(coins);
-  if(!layout) console.log('no layout found');
-  layout.create(coins, state, bounds, coinsBounds);
+  if(state.selectedCoin !== undefined)
+    coinLayout.create(coins, state, bounds);
+  else
+    layout.create(coins, state, bounds, coinsBounds);
 }
 
 layouter.getApplicableLayouts = function(state) {

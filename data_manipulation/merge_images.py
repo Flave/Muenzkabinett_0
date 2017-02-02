@@ -19,7 +19,7 @@ threshold = 240
 blur = 8 # more or less arbitrary
 shadow_size = 20 # # more or less arbitrary
 thumb_height = 40
-start_index = 12000
+start_index = 0
 coin_ids = list(coin_ids)[start_index:]
 
 keys.append("x")
@@ -112,9 +112,9 @@ for i, coin_data in enumerate(coin_ids):
     image_file_path = '../data/images/sprites/' + image_file_name + '.png'
     merged_image.save(image_file_path, "PNG")
     # compress the image just created and save it again
-    print "Optimising image " + str(sheet_index)
-    source = tinify.from_file(image_file_path)
-    source.to_file(image_file_path[:-16] + ".png")
+    # print "Optimising image " + str(sheet_index)
+    # source = tinify.from_file(image_file_path)
+    # source.to_file(image_file_path[:-16] + ".png")
     # reset all the variables
     merged_image = Image.new('RGBA', (1, 1))
     sheet_index += 1

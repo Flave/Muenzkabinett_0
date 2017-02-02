@@ -27,7 +27,7 @@ function loadCoins() {
   loadCsv("data/csv/coins.csv", function(err, coinsData) {
     if(err) console.log(err);
     else {
-      var fileNames = createSpriteFileNames("coins", 31, coinsData.length, 5000);
+      var fileNames = createSpriteFileNames("coins", 40, coinsData.length, 2000);
       loadSpriteSheets(fileNames, function() {
         dispatch.call('coinsLoaded', loader);
       }, function(spriteLoader, resource) {

@@ -74,10 +74,19 @@ export default function UiTaglist() {
   }
 
   function onTagClick(d, i) {
-    var selectedProperties = _cloneDeep(stateStore.get().selectedProperties),
+    var state = _cloneDeep(stateStore.get()),
+        selectedProperties = state.selectedProperties,
+        // remove the selected property if it was already selected
         removedProperty = _remove(selectedProperties, {key: d.key})
+        
+    // only add property if there was no property removed
     if(removedProperty.length === 0)
       selectedProperties.push(d);
+
+    // deselect coin if selected
+    if(state.selectedCoin !== undefined)
+      stateStore.set('selectedCoin', undefined, false);
+
     stateStore.set('selectedProperties', selectedProperties);
   }
 

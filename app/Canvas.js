@@ -49,15 +49,22 @@ export default function Canvas() {
       })
       .on('dragend', function() {
         zoomCanvas.call(zoomBehavior);
+      })
+      .on('click', function() {
+        var state = stateStore.get();
+        if(state.selectedCoin === this.data.id)
+          stateStore.set('selectedCoin', undefined);
+        else
+          stateStore.set('selectedCoin', this.data.id);
       });
 
       stage.addChild(coin);
     });
 
-    stateStore.on('change.canvas', updateLayout);
+    stateStore.on('change.canvas', update);
 
     requestAnimationFrame( animate );
-    updateLayout();
+    update();
   }
 
   function animate() {
@@ -74,11 +81,12 @@ export default function Canvas() {
 
   }
 
-  function updateLayout() {
+  function update() {
     var state = stateStore.get(),
         bounds = getCanvasBounds();
-    layouter.update(coinsStore.get(), state, bounds);
+    layouter.update(coinsStore.get(), state, bounds);    
   }
+
 
   canvas.size = function(_) {
     if(!arguments.length) return size;
