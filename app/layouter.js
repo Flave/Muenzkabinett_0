@@ -1,119 +1,11 @@
 import * as d3 from 'd3';
 import _findIndex from 'lodash.findindex';
 import _find from 'lodash.find';
+import layouts from 'app/layouts';
 
 var layouter = {}
 
-layouter.layouts = [
-  {
-    key: 'pile',
-    value: 'Pile',
-    requiredTypes: [],
-    create: function pile(coins, size) {
-      coins.forEach(function(coin, i) {
-        var x = d3.randomNormal(size.width/2, 100)();
-        var y = d3.randomNormal(size.height/2, 100)();
-        coin.move(x, y);
-      });
-    }
-  },
-  {
-    key: 'clusters',
-    value: 'Clusters',
-    requiredTypes: ['discrete'],
-    create: function pile(coins, size) {
-      coins.forEach(function(coin, i) {
-        var x = d3.randomNormal(size.width/2, 100)();
-        var y = d3.randomNormal(size.height/2, 100)();
-        coin.move(x, y);
-      });
-    }
-  },
-  {
-    key: 'cluster_list',
-    value: 'Clusters List',
-    requiredTypes: ['discrete'],
-    create: function pile(coins, size) {
-      coins.forEach(function(coin, i) {
-        var x = d3.randomNormal(size.width/2, 100)();
-        var y = d3.randomNormal(size.height/2, 100)();
-        coin.move(x, y);
-      });
-    }
-  },
-  {
-    key: 'scatter_line',
-    value: 'Scatter Line',
-    requiredTypes: ['continuous'],
-    create: function plainGrid(coins) {
-      var width = 3000;
-
-      coins.sort(function(a, b) {
-        return a.data.date_earliest - b.data.date_earliest;
-      });
-      var x = 0,
-          yIndex = 0,
-          y = 0;
-      coins.forEach(function(coin, i) {
-        if(x > width) {
-          x = 0;
-          yIndex++;
-        }
-        y = yIndex * 31;
-
-        coin.move(x, y, 1000, Math.random() * 500);
-
-        x += coin.width;
-      });
-    }
-  },
-  {
-    key: 'plain_grid',
-    value: 'Plain Grid',
-    requiredTypes: ['continuous'],
-    create: function plainGrid(coins) {
-      var width = 3000;
-
-      coins.sort(function(a, b) {
-        return a.data.date_earliest - b.data.date_earliest;
-      });
-      var x = 0,
-          yIndex = 0,
-          y = 0;
-      coins.forEach(function(coin, i) {
-        if(x > width) {
-          x = 0;
-          yIndex++;
-        }
-        y = yIndex * 31;
-
-        coin.move(x, y, 1000, Math.random() * 500);
-
-        x += coin.width;
-      });
-    }
-  },
-  {
-    key: 'cluster_grid',
-    value: 'Clusters Grid',
-    requiredTypes: ['discrete', 'discrete']
-  },
-  {
-    key: 'scatter_lines',
-    value: 'Scatter Lines',
-    requiredTypes: ['discrete', 'continuous']
-  },
-  {
-    key: 'scatter_plot',
-    value: 'Scatter Plot',
-    requiredTypes: ['continuous', 'continuous']
-  },
-  {
-    key: 'nested_grid',
-    value: 'Nested Grid',
-    requiredTypes: ['discrete', 'continuous']
-  }
-]
+layouter.layouts = layouts;
 
 
 function isLayoutApplicable(layout, properties) {
@@ -139,10 +31,23 @@ function isLayoutApplicable(layout, properties) {
   return applicable;
 }
 
-layouter.update = function(state, coins, size) {
-  var layout = _find(layouter.layouts, {key: state.selectedLayout});
+function getCoinsBounds(coins) {
+  var bounds = {top: Infinity, right: -Infinity, bottom: -Infinity, left: Infinity};
+
+  coins.forEach(function(coin) {
+    bounds.top = coin.y < bounds.top ? coin.y : bounds.top;
+    bounds.right = coin.x > bounds.right ? coin.x : bounds.right;
+    bounds.bottom = coin.y > bounds.bottom ? coin.y : bounds.bottom;
+    bounds.left = coin.x < bounds.top ? coin.x : bounds.top;
+  });
+  return bounds;
+}
+
+layouter.update = function(coins, state, bounds) {
+  var layout = _find(layouter.layouts, {key: state.selectedLayout}),
+      coinsBounds = getCoinsBounds(coins);
   if(!layout) console.log('no layout found');
-  layout.create(coins, size);
+  layout.create(coins, state, bounds, coinsBounds);
 }
 
 layouter.getApplicableLayouts = function(state) {

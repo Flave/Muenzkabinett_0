@@ -1,3 +1,4 @@
-<div class="ui-section ui-tabs" id="tabs"></div>
-<div class="ui-section ui-taglist" id="attributes"></div>
-<div class="ui-section ui-selection" id="attribute-selection"></div>
+<div class="ui__section ui-tabs" id="tabs"></div>
+<div class="ui__section ui-taglist" id="attributes"></div>
+<div class="ui__section ui-selection" id="attribute-selection"></div>
+<span class="ui__toggle"><%= toggle %></span>

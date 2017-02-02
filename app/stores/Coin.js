@@ -1,12 +1,12 @@
 import {Sprite, Point} from 'pixi.js';
 import * as d3 from 'd3';
-import Tooltip from 'app/components/Tooltip';
+import tooltip from 'app/components/Tooltip';
 
 export default function Coin(texture, data) {
   var coin = new PIXI.Sprite(texture),
-      dispatch = d3.dispatch('dragstart', 'drag', 'dragend'),
-      tooltip = Tooltip();
+      dispatch = d3.dispatch('dragstart', 'drag', 'dragend');
   coin.data = data;
+  coin.interactive = true;
   //coin.visible = false;
 
   coin
@@ -26,14 +26,14 @@ export default function Coin(texture, data) {
         projectedPoint = this.parent.transform.localTransform.apply(coinCenter);
 
     window.setTimeout(function() {
-      tooltip
-        .visibility(true)
-        .position(projectedPoint)(coin.data);
+      tooltip.show(coin.data, projectedPoint);
     });
+    this.overCoin = true;
   }
 
   function onMouseOut(event) {
-    tooltip.visibility(false)();
+    tooltip.hide();
+    this.overCoin = false;
   }
 
   function onDragStart(event) {
@@ -51,7 +51,7 @@ export default function Coin(texture, data) {
     dispatch.call('dragstart');
   }
 
-  function onDragMove() {
+  function onDragMove(event) {
     if (this.dragging) {
       var mouseX = this.event.originalEvent.clientX,
           mouseY = this.event.originalEvent.clientY,
@@ -65,6 +65,9 @@ export default function Coin(texture, data) {
       this.position.y = projectedPoint.y;
       dispatch.call('drag');
     }
+
+    if(this.overCoin)
+      event.data.originalEvent.stopPropagation();
   }
 
   function onDragEnd() {
@@ -73,6 +76,18 @@ export default function Coin(texture, data) {
     this.event = null;
     dispatch.call('dragend');
   }
+
+  /*
+    var x = properties.x !== undefined ? properties.x : coin.position.x,
+        y = properties.y !== undefined ? properties.y : coin.position.y,
+        scale = properties.scale !== undefined ? properties.scale : coin.scale,
+        dx = x - coin.position.x,
+        dy = y - coin.position.y,
+        ds = scale - coin.scale,
+        ox = coin.position.x,
+        oy = coin.position.y,
+        os = coin.scale;
+  */
 
   coin.move = function(x, y, duration, delay, cb) {
     var dx = x - coin.position.x,

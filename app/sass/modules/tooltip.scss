@@ -5,7 +5,7 @@
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
   color: #fff;
   padding: 20px;
-  transition: top left 1s;
+  transition: bottom .3s, left .3s, visibility .1s;
 }
 
 .tooltip__title {

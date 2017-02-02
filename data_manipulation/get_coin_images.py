@@ -47,22 +47,22 @@ for i, coin in enumerate(coins[start_index:end_index]):
   if image_id:
     print i
     print coin[0]
-    print thumb_url_front
     
     if image_id.group(1) == "1629":
       continue
       #sys.exit()
 
     image_id = image_id.group(1)
-    large_url_front = "http://ww2.smb.museum/mk_edit/images/" + image_id + "/vs_org.jpg"
+    large_url = "http://ww2.smb.museum/mk_edit/images/" + image_id + "/rs_org.jpg"
+    print large_url
 
-    image_file = cStringIO.StringIO(urllib.urlopen(large_url_front).read())
+    image_file = cStringIO.StringIO(urllib.urlopen(large_url).read())
     img = Image.open(image_file)
     img = img.convert("RGBA")
     img_transparent = make_white_transparent(img)
-    img_resized = img_transparent.resize((calculate_image_width(img_transparent, output_height), output_height))
+    img_resized = img_transparent.resize((calculate_image_width(img_transparent, output_height), output_height), Image.ANTIALIAS)
 
-    img_resized.save('../data/images/thumbs_front_m/' + coin[0] + '.png', "PNG")
+    img_resized.save('../data/images/thumbs_back_m/' + coin[0] + '.png', "PNG")
 
     # urllib.urlretrieve(large_url_front, os.path.dirname(__file__) + "../data/images/large_front/large_front_" + fn[0:-4] + ".jpg")
     # print i, fn

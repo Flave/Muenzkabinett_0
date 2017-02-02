@@ -46,7 +46,7 @@ function loadCoins() {
 function createCoins(spriteLoader, resource, coinsData) {
   var extent = resource.name.split("_").map(function(number) {return parseInt(number)}).slice(1,3);
   d3.range(extent[0], extent[1]).map(function(coinIndex) {
-    if(coinIndex > 100) return;
+    //if(coinIndex > 100) return;
     var coinData = coinsData[coinIndex],
         texture = new Texture(spriteLoader.resources[resource.name].texture),
         rectangle = new Rectangle(coinData.x, coinData.y, coinData.width, coinData.height);

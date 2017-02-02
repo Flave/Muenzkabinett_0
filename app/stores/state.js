@@ -16,7 +16,6 @@ var setters = {
 
     _state[key] = newProp;
     var applicableLayouts = layouter.getApplicableLayouts(_state);
-    console.log(applicableLayouts);
     _state.selectedLayout = applicableLayouts[0].key;
   }
 }

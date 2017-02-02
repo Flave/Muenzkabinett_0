@@ -20,11 +20,28 @@ export default function Canvas() {
     renderer.render(stage);
   }
 
+  function getCanvasBounds() {
+    var topLeft = projectPixel(0, 0),
+        bottomRight = projectPixel(window.innerWidth, window.innerHeight);
+    return {
+      left: topLeft.x,
+      top: topLeft.y,
+      right: bottomRight.x,
+      bottom: bottomRight.y
+    }
+  }
+
+  function projectPixel(x, y) {
+    var mousePos = new Point(x, y);
+    return stage.transform.localTransform.applyInverse(mousePos);
+  }
+
   canvas.init = function() {
     coinsStore.get().forEach(function(coin, i) {
-      coin.x = d3.randomNormal(size.width/2, 100)();
+/*      coin.x = d3.randomNormal(size.width/2, 100)();
       coin.y = d3.randomNormal(size.height/2, 100)();
-      coin.interactive = true;
+
+      coin.move(coin.x, coin.y, 500, Math.random() * 100);*/
 
       coin
       .on('dragstart', function() {
@@ -40,6 +57,7 @@ export default function Canvas() {
     stateStore.on('change.canvas', updateLayout);
 
     requestAnimationFrame( animate );
+    updateLayout();
   }
 
   function animate() {
@@ -57,8 +75,9 @@ export default function Canvas() {
   }
 
   function updateLayout() {
-    var state = stateStore.get();
-    layouter.update(state, coinsStore.get(), size)
+    var state = stateStore.get(),
+        bounds = getCanvasBounds();
+    layouter.update(coinsStore.get(), state, bounds);
   }
 
   canvas.size = function(_) {

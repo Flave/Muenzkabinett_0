@@ -13,14 +13,14 @@ merged_image = Image.new('RGBA', (1, 1))
 sprite_sheet_specs = [["x", "y", "width", "height"]]
 num_rows = 0
 x_pos = 0
-coins_per_sheet = 5000
+coins_per_sheet = 2000
 sheet_index = 0
 threshold = 240
-blur = 1.7
-shadow_size = 3
+blur = 8 # more or less arbitrary
+shadow_size = 20 # # more or less arbitrary
 thumb_height = 40
-coin_height = thumb_height - shadow_size * 2
-coin_ids = list(coin_ids)
+start_index = 12000
+coin_ids = list(coin_ids)[start_index:]
 
 keys.append("x")
 keys.append("y")
@@ -49,29 +49,30 @@ def create_shadow(img):
   new_data = []
   for item in datas:
       if item[3] > 255 - threshold:
-          new_data.append((0, 0, 0, 180))
+          new_data.append((0, 0, 0, 220))
       else:
           new_data.append((255, 255, 255, 0))
   mask = Image.new(img.mode, img.size)
   mask.putdata(new_data)
   new_width, new_height = img.size
+  # resize the mask to make the shadow a bit bigger than the coin
+  mask = mask.resize((calculate_image_width(mask, new_height) + 8, new_height + 8), Image.ANTIALIAS)
   new_image = Image.new(img.mode, (new_width + shadow_size * 2, new_height + shadow_size * 2))
-  new_image.paste(mask, (3, 3))
+  new_image.paste(mask, (shadow_size, shadow_size))
   new_image = new_image.filter(ImageFilter.GaussianBlur(blur))
   return new_image
 
 
 for i, coin_data in enumerate(coin_ids):
   coin_id = coin_data[0]
-  img = Image.open('../data/images/thumbs_front_m/' + str(coin_id) + ".jpg")
+  img = Image.open('../data/images/thumbs_front_m/' + str(coin_id) + ".png")
   img = img.convert("RGBA")
 
-  # make sure the new thumb is bigger than the old one
-
-  #new_thumb = make_white_transparent(img)
+  # create shadow from coin image with the original size plus shadow sizw
   shadow_thumb = create_shadow(img)
-  shadow_thumb.paste(img, (3, 3), img)
-  shadow_thumb = img.resize((calculate_image_width(img, coin_height), coin_height))
+  shadow_thumb.paste(img, (shadow_size, shadow_size), img)
+  # resize the shadow thumb to the desired size
+  shadow_thumb = shadow_thumb.resize((calculate_image_width(img, thumb_height), thumb_height), Image.ANTIALIAS)
 
   # create new image and paste current coin into it
   if i % 50 == 0:
@@ -106,9 +107,9 @@ for i, coin_data in enumerate(coin_ids):
 
   # if coins_per_sheet or end of coins is reached save image and compress
   if (i + 1) % coins_per_sheet == 0 or (i == (len(coin_ids) - 1)):
-    end_index = i if i == (len(coin_ids) - 1) else (sheet_index + 1) * coins_per_sheet
-    image_file_name = 'coins_sprites_' + str(thumb_height) + '_' + str(sheet_index * coins_per_sheet) + '_' + str(end_index) + '_unoptimised'
-    image_file_path = '../data/images/sprites/' + image_file_name + '__.png'
+    end_index = i + start_index if i == (len(coin_ids) - 1) else (sheet_index + 1) * coins_per_sheet + start_index
+    image_file_name = 'coins_sprites_' + str(thumb_height) + '_' + str(sheet_index * coins_per_sheet + start_index) + '_' + str(end_index) + '_unoptimised'
+    image_file_path = '../data/images/sprites/' + image_file_name + '.png'
     merged_image.save(image_file_path, "PNG")
     # compress the image just created and save it again
     print "Optimising image " + str(sheet_index)

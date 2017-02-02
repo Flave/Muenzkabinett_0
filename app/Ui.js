@@ -14,7 +14,8 @@ export default function Ui() {
       template = _template(Template),
       uiTabs = UiTabs(),
       uiTaglist = UiTaglist(),
-      dispatch = d3.dispatch('click');
+      dispatch = d3.dispatch('click'),
+      visible = false;
 
   stateStore.on('change.ui', render);
 
@@ -25,10 +26,20 @@ export default function Ui() {
   }
 
   function render() {
-    var state = stateStore.get();
-    container.html(template())
+    var state = stateStore.get(),
+        toggleText = visible ? 'Hide' : 'Show',
+        toggleClass = visible ? 'is-visible' : '';
+    container.html(template({toggle: toggleText}))
     uiTabs(container.select('#tabs'));
     uiTaglist(container.select('#attributes'));
+
+    container
+      .classed('is-visible', visible)
+
+    container.selectAll('.ui__toggle').on('click', function() {
+      visible = !visible;
+      render();
+    })
   }
 
 
