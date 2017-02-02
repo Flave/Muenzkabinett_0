@@ -7,44 +7,10 @@ import _find from 'lodash.find';
 import _findIndex from 'lodash.findindex';
 import _remove from 'lodash.remove';
 import templater from 'app/templater';
+import constants from 'app/constants';
 
-var tags = [
-  {
-    key: 'production_country',
-    value: 'Country',
-    type: 'discrete'
-  },
-  {
-    key: 'production_region',
-    value: 'Region',
-    type: 'discrete'
-  },
-  {
-    key: 'production_minting_place',
-    value: 'Minting Place',
-    type: 'discrete'
-  },
-  {
-    key: 'weight',
-    value: 'Weight',
-    type: 'continuous'
-  },
-  {
-    key: 'size',
-    value: 'Size',
-    type: 'continuous'
-  },
-  {
-    key: 'date_earliest',
-    value: 'Earliest Date',
-    type: 'continuous'
-  },
-  {
-    key: 'date_latest',
-    value: 'Last Date',
-    type: 'continuous'
-  }
-]
+
+var tags = constants.coinProperties.filter(function(property) {return property.type !== 'individual'});
 
 export default function UiTaglist() {
   var template = hogan.compile(Template),
