@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-scatter_lines:before {
+  content: "\e908";
+}
 .icon-cluster_grid:before {
   content: "\e900";
 }
@@ -48,4 +51,3 @@
 .icon-scatter_plot:before {
   content: "\e907";
 }
-

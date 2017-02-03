@@ -29,13 +29,15 @@ export default {
       key: 'weight',
       value: 'Weight',
       type: 'continuous',
-      similarityWeight: 0.1
+      similarityWeight: 0.1,
+      grouping: 10
     },
     {
       key: 'diameter',
       value: 'Diameter',
       type: 'continuous',
-      similarityWeight: 0.1
+      similarityWeight: 0.1,
+      grouping: 5
     },
     {
       key: 'production_material',
@@ -53,13 +55,15 @@ export default {
       key: 'date_earliest',
       value: 'Earliest Date',
       type: 'continuous',
-      similarityWeight: 0.1
+      similarityWeight: 0.1,
+      grouping: 100
     },
     {
       key: 'date_latest',
       value: 'Last Date',
       type: 'continuous',
-      similarityWeight: 0.1
+      similarityWeight: 0.1,
+      grouping: 100
     }
   ]
 }

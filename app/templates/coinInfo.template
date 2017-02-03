@@ -1,0 +1,15 @@
+<h2 class="coin-info__title">
+  <a href="http://ww2.smb.museum/ikmk/object.php?lang=en&id=182<%= id %>"><%= title %></a>
+</h2>
+<p class="coin-info__subtitle">
+  <%= date_earliest %> until <%= date_latest %>
+</p>
+<p class="coin-info__data">
+  <b>Origin</b> <%= production_country %> — <%= production_region %> — <%= production_minting_place %>
+</p>
+<p class="coin-info__data">
+  <b>Nominal</b> <%= nominal %>
+</p>
+<p class="coin-info__data">
+  <b>Material</b> <%= production_material %>
+</p>

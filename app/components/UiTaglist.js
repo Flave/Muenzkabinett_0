@@ -3,7 +3,6 @@ import Template from 'app/templates/uiTaglist.template';
 import stateStore from 'app/stores/state';
 import _cloneDeep from 'lodash.clonedeep';
 import _find from 'lodash.find';
-import _findIndex from 'lodash.findindex';
 import _remove from 'lodash.remove';
 import templater from 'app/templater';
 import constants from 'app/constants';

@@ -1,0 +1,28 @@
+.coin-info {
+  position: fixed;
+  z-index: 998;
+  transition: all .3s;
+  text-align: center;
+}
+
+.coin-info__title {
+  text-align: center;
+  pointer-events: auto;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  a {
+    color: #FDCE00;
+    text-decoration: none;
+  }
+}
+
+.coin-info__subtitle {
+  
+  font-size: 14px;
+}
+
+.coin-info__data {
+
+}

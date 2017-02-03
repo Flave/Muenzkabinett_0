@@ -3,6 +3,8 @@ import coinsStore from 'app/stores/coins';
 import * as d3 from 'd3';
 import stateStore from 'app/stores/state';
 import layouter from 'app/layouter';
+import coinInfo from 'app/components/CoinInfo';
+import _find from 'lodash.find';
 
 export default function Canvas() {
   var renderer,
@@ -38,11 +40,6 @@ export default function Canvas() {
 
   canvas.init = function() {
     coinsStore.get().forEach(function(coin, i) {
-/*      coin.x = d3.randomNormal(size.width/2, 100)();
-      coin.y = d3.randomNormal(size.height/2, 100)();
-
-      coin.move(coin.x, coin.y, 500, Math.random() * 100);*/
-
       coin
       .on('dragstart', function() {
         zoomCanvas.on('.zoom', null);
@@ -52,6 +49,7 @@ export default function Canvas() {
       })
       .on('click', function() {
         var state = stateStore.get();
+        coinInfo.hide();
         if(state.selectedCoin === this.data.id)
           stateStore.set('selectedCoin', undefined);
         else
@@ -75,6 +73,7 @@ export default function Canvas() {
   function zoom() {
     stage.setTransform(d3.event.transform.x, d3.event.transform.y, d3.event.transform.k, d3.event.transform.k);
     renderer.render(stage);
+    updateCoinInfo();
   }
 
   function zoomEnd() {
@@ -84,8 +83,25 @@ export default function Canvas() {
   function update() {
     var state = stateStore.get(),
         prevState = stateStore.getPrevious(),
-        bounds = getCanvasBounds();
-    layouter.update(coinsStore.get(), state, bounds);    
+        bounds = getCanvasBounds(),
+        coins = coinsStore.get();
+
+    layouter.update(coins, state, bounds);
+    window.setTimeout(function() {
+      updateCoinInfo();
+    }, 1200);
+  }
+
+  function updateCoinInfo() {
+    var state = stateStore.get(),
+        coins = coinsStore.get();
+
+    if(state.selectedCoin !== undefined) {
+      var coin = _find(coins, function(coin) {return coin.data.id === state.selectedCoin});
+      coinInfo.show(coin, stage.transform);
+    } else {
+      coinInfo.hide();
+    }
   }
 
 
